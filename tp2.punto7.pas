@@ -33,7 +33,7 @@ manera análoga, tampoco puede aprobar más de una vez el examen final de una mi
 
 program punto7;
 const
-valor_alto = 99999;
+valor_alto = 999;
 type
 maestro_info=record
 	cod:integer;
@@ -43,7 +43,7 @@ maestro_info=record
 	final_ap:integer;
 	end;
 	
-cursada_info:record
+cursada_info=record
 	cod:integer;
 	cod_mat:integer;
 	ano:integer;
@@ -57,7 +57,7 @@ finales_info=record
 	nota:integer;
 	end;
 	
-meastro = file of meastro_info;
+maestro = file of maestro_info;
 cursada = file of cursada_info;
 finales = file of finales_info;
 
@@ -81,7 +81,6 @@ end;
 procedure procesarArchivo(var mae:maestro; var f:finales; var c:cursada);
 var
 regF:finales_info;regC:cursada_info;regM:maestro_info;
-codAct:integer;
 begin
 reset(mae);
 reset(f);
@@ -90,12 +89,12 @@ leerFinal(f,regF);
 leerCursada(c,regC);
 while(not EOF(mae))do begin
 	read(mae,regM);
-	while(regC.cod <> valor_alto) and (regC.cod=regM.cod;)do begin
+	while(regC.cod <> valor_alto) and (regC.cod=regM.cod)do begin
 		if(regC.resultado) then
-			regM.cursAp:=regM.cursAp + 1;
-		leerCursada(c,regM);
+			regM.curs_ap:=regM.curs_ap + 1;
+		leerCursada(c,regC);
 		end;
-	while(regF.cod <> valor_alto) and (regF.cod=regM.cod;)do begin
+	while(regF.cod <> valor_alto) and (regF.cod=regM.cod)do begin
 		if(regF.nota >= 4) then
 			regM.final_ap:= regM.final_ap + 1;
 		leerFinal(f,regF);
@@ -105,7 +104,7 @@ while(not EOF(mae))do begin
 	end;
 end;
 var
-mea:meastro;
+mae:maestro;
 f:finales;
 c:cursada;
 begin
