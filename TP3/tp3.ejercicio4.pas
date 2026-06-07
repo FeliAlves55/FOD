@@ -96,3 +96,56 @@ begin
 	end;
 	close(a);
 end;
+
+//C
+procedure eliminarFlor (var a: archivo; flor:reg_flor);
+var
+	reg,cab:reg_flor;
+	aux,pos:integer;
+	ok:boolean;
+begin
+	reset(a);
+	ok:=false;
+	
+	seek(a, 0);
+    read(a, cab);
+    
+    if not EOF(a) then read(a, reg);
+    
+	while(not EOF(a)) and (not ok) do begin
+		if(reg.nombre = flor.nombre) and (reg.codigo = flor.codigo) then begin
+			ok := true;
+			// Guardamos la posición del registro a borrar
+			pos:=filePos(a)-1; 
+			//El registro que estamos borrando pasa a apuntar a lo que apuntaba la cabecera
+			reg.codigo:=cab.codigo;
+			
+			//Ahora la cabecera pasa a apuntar a este nuevo hueco libre (en negativo)
+            cab.codigo := -pos;
+            
+			seek(a,0);
+			write(a,cab)
+			// Guardamos el registro "marcado" en su posición original
+			seek(a,pos);
+			write(a,reg);
+			
+		end
+		else
+			read(a,reg);
+	end;
+	close(a); 
+end;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
