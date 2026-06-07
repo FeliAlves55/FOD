@@ -15,7 +15,7 @@ Política de reutilización:
 
 a. Implementación requerida
 Implementar el siguiente módulo:
-{ Abre el archivo y agrega una flor, recibida como parámetro,
+Abre el archivo y agrega una flor, recibida como parámetro,
 respetando la política de reutilización de espacio descripta 
 
 procedure agregarFlor (var a: tArchFlores; nombre: string; codigo: integer);
@@ -29,7 +29,7 @@ correctamente el listado.
 
 
 c. Implemente el siguiente módulo:
-{Abre el archivo y elimina la flor recibida como parámetro manteniendo la
+Abre el archivo y elimina la flor recibida como parámetro manteniendo la
 política descripta anteriormente
 procedure eliminarFlor (var a: tArchFlores; flor:reg_flor);
 * }
@@ -43,7 +43,7 @@ reg_flor = record
 archivo = file of reg_flor;
 
 
-#A
+//A
 procedure agregarFlor (var a: archivo; nombre: string; codigo: integer);
 var
 	f,cab,libre:reg_flor;
@@ -55,7 +55,7 @@ begin
 	f.codigo:=codigo;
 	
 	
-	seek(a,0)
+	seek(a,0);
 	read(a,cab);
 	
 	if(cab.codigo < 0) then begin
@@ -81,8 +81,18 @@ begin
 	close(a);
 	end;
 		
-
-
-
-
+//B
+procedure listarFlores (var a:archivo);
+var
+	f:reg_flor;
+begin
+	reset(a);
+	seek(a,0);
+	read(a,f);
+	while( not EOF(a)) do begin
+		if(f.codigo > 0) then
+			writeln('Nombre: ', f.nombre,'Codigo: ', f.codigo);
+		read(a,f);
+	end;
+	close(a);
 end;
